@@ -18,7 +18,7 @@ namespace ShopBeta.Api.Controllers
 
         public WeatherForecastController(ILoggerManager logger)
         {
-            _logger = logger ?? throw new ArgumentNullException();
+            _logger = logger ?? throw new ArgumentNullException(nameof(_logger));
         }
 
         [HttpGet]
