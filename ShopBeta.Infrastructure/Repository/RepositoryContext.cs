@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace ShopBeta.Infrastructure.Repository
 {
     public class RepositoryContext : DbContext
@@ -15,6 +16,5 @@ namespace ShopBeta.Infrastructure.Repository
 
         public DbSet<Products> Products { get; set; }
         public DbSet<Reviews> Reviews { get; set; }
-        public DbSet<ShippingAddress> ShippingAddresses { get; set; }
     }
 }

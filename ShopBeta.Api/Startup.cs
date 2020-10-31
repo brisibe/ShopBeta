@@ -37,6 +37,8 @@ namespace ShopBeta.Api
 
             services.AddAutoMapper(typeof(Startup));
 
+            services.ConfigureSqlContext(Configuration);
+
             services.AddControllers();
         }
 

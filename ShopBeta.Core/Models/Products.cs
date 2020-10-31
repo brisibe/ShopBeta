@@ -10,6 +10,7 @@ namespace ShopBeta.Core.Models
     public class Products
     {
         [Column("ProductId")]
+        [Key]
         public int productId { get; set; }
 
         [Required(ErrorMessage ="product name is required.")]
@@ -33,8 +34,6 @@ namespace ShopBeta.Core.Models
         public ICollection<Reviews> reviews { get; set; }
 
 
-        //public User user { get; set; }
-        //public Guid UserId { get; set; }
 
     }
 }

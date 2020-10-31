@@ -8,6 +8,7 @@ namespace ShopBeta.Core.Models
 {
     public class Reviews
     {
+        [Key]
         public int ReviewId { get; set; }
         public string Name { get; set; }
 
