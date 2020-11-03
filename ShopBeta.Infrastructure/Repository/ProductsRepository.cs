@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShopBeta.Core.DTO.Response;
 using ShopBeta.Core.Interfaces;
 using ShopBeta.Core.Models;
 using System;
@@ -16,19 +17,21 @@ namespace ShopBeta.Infrastructure.Repository
 
         }
 
-      
 
-        
+
+
 
         public async Task<IEnumerable<Products>> GetAllProductsAsync(bool trackChanges) =>
             await FindAll(trackChanges)
-                .OrderBy(c => c.Name)
+                .OrderBy(c => c.ProductsId)
                 .ToListAsync();
 
 
-        public async Task<Products> GetProductAsync(int productId, bool trackChanges) =>
-            await FindByCondition(c => c.productId.Equals(productId), trackChanges)
-            .FirstOrDefaultAsync();
+
+        public async Task<Products> GetProductAsync(int productId, bool trackChanges) => 
+             await FindByCondition(c => c.ProductsId.Equals(productId), trackChanges).Include(a => a.reviews)
+             .FirstOrDefaultAsync();
+
 
         public void CreateProduct(Products product) =>
             Create(product);

@@ -19,8 +19,9 @@ namespace ShopBeta.Core.DTO.Response
 
         public string Price { get; set; }
         public string OldPrice { get; set; }
-        public Guid UserId { get; set; }
 
-        public ICollection<Reviews> reviews { get; set; }
+
+      
+
     }
 }

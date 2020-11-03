@@ -10,8 +10,7 @@ namespace ShopBeta.Core.Models
     public class Products
     {
         [Column("ProductId")]
-        [Key]
-        public int productId { get; set; }
+        public int ProductsId { get; set; }
 
         [Required(ErrorMessage ="product name is required.")]
         [MaxLength(60, ErrorMessage ="Maximum length is 60")]
@@ -32,6 +31,8 @@ namespace ShopBeta.Core.Models
         public string OldPrice { get; set; }
 
         public ICollection<Reviews> reviews { get; set; }
+
+       
 
 
 

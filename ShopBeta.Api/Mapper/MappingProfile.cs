@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ShopBeta.Core.DTO.Response;
 using ShopBeta.Core.Entities.Requests;
 using ShopBeta.Core.Models;
 using System;
@@ -13,6 +14,7 @@ namespace ShopBeta.Infrastructure.Mapper
         {
 
             CreateMap<ProductCreationDto, Products>();
+            CreateMap<Products, ProductCreationDto>();
             CreateMap<ProductUpdateDto, Products>();
             CreateMap<ReviewsDto, Reviews>();
            
