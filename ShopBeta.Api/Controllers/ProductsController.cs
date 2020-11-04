@@ -22,9 +22,9 @@ namespace ShopBeta.Api.Controllers
         private readonly ILoggerManager _logger;
         public ProductsController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
         {
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(_mapper));
-            _logger = logger ?? throw new ArgumentNullException(nameof(_logger));
-            _repository = repository ?? throw new ArgumentNullException(nameof(_repository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
 
