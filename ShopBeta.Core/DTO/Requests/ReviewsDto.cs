@@ -9,7 +9,7 @@ namespace ShopBeta.Core.Entities.Requests
         public string Name { get; set; }
 
         public string Comment { get; set; }
-        public DateTime Date { get; set; } = DateTime.Now;
+        public DateTime Date { get; set; } 
 
      
     }

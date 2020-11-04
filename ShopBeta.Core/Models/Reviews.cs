@@ -13,7 +13,7 @@ namespace ShopBeta.Core.Models
         public string Name { get; set; }
 
         public string Comment { get; set; }
-        public DateTime date { get; set; }
+        public DateTime date { get; set; } 
 
         public Products Product { get; set; }
         public int ProductId { get; set; }

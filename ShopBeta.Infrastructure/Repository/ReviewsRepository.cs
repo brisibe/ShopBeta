@@ -28,6 +28,9 @@ namespace ShopBeta.Infrastructure.Repository
             await FindByCondition(c => c.ProductId.Equals(productId), trackChanges)
                 .OrderBy(c => c.date)
                 .ToListAsync();
+
+        public async Task<Reviews> GetReview(int productId, int reviewId, bool trackChanges) =>
+            await FindByCondition(c => c.ProductId.Equals(productId) && c.ReviewId.Equals(reviewId), trackChanges).SingleOrDefaultAsync();
         
     }
 }

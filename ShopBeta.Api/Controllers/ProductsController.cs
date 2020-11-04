@@ -23,8 +23,8 @@ namespace ShopBeta.Api.Controllers
         public ProductsController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(_mapper));
-            _logger = logger ?? throw new ArgumentNullException(nameof(_logger)); 
-            _repository = repository?? throw new ArgumentNullException(nameof(_repository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(_logger));
+            _repository = repository ?? throw new ArgumentNullException(nameof(_repository));
         }
 
 
@@ -34,7 +34,7 @@ namespace ShopBeta.Api.Controllers
 
             try
             {
-             
+
                 var products = await _repository.Products.GetAllProductsAsync(trackChanges: false);
                 if (products == null)
                 {
@@ -51,7 +51,7 @@ namespace ShopBeta.Api.Controllers
             }
         }
 
-        [HttpGet("{ProductId}", Name ="ProductbyId")]
+        [HttpGet("{ProductId}", Name = "ProductbyId")]
 
         public async Task<IActionResult> GetProductById(int productId)
         {
@@ -66,12 +66,12 @@ namespace ShopBeta.Api.Controllers
                     return NotFound();
                 }
 
-             
+
 
                 return Ok(product);
-                
 
-              
+
+
             }
             catch (Exception ex)
             {
@@ -82,7 +82,7 @@ namespace ShopBeta.Api.Controllers
         }
 
         [HttpPost]
-        public async Task <IActionResult> CreateProduct([FromBody] ProductCreationDto productDto)
+        public async Task<IActionResult> CreateProduct([FromBody] ProductCreationDto productDto)
         {
             try
             {
@@ -104,9 +104,9 @@ namespace ShopBeta.Api.Controllers
                 await _repository.SaveAsync();
 
                 return CreatedAtRoute("ProductById", new { ProductId = product.ProductsId }, product);
-                    
-                    }
-            catch(Exception ex)
+
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "internal server error");
@@ -114,5 +114,122 @@ namespace ShopBeta.Api.Controllers
             }
         }
 
+        [HttpDelete("{productId}")]
+
+        public async Task<IActionResult> DeleteProduct(int productId)
+        {
+            try
+            {
+                var product = await _repository.Products.GetProductAsync(productId, trackChanges: false);
+
+                if (product == null)
+                {
+                    _logger.LogError($"product with id {productId} was not found");
+                    return NotFound();
+                }
+
+                _repository.Products.DeleteProduct(product);
+                await _repository.SaveAsync();
+
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+
+            }
+        }
+
+        [HttpGet("{productId}/reviews")]
+        public async Task<IActionResult> GetProductReviews(int productId)
+        {
+            try
+            {
+                var productReviews = await _repository.Reviews.GetReviews(productId, trackChanges: false);
+                if (productReviews == null)
+                {
+                    _logger.LogInfo("there are no reviews for this product");
+                    return NotFound();
+                }
+
+                return Ok(productReviews);
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost("{productId}/reviews")]
+        public async Task<IActionResult> CreateReview (int productId, ReviewsDto review)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("invalid model");
+                    return UnprocessableEntity();
+                }
+
+                var product = await _repository.Products.GetProductAsync(productId, trackChanges: false);
+
+                if (product == null)
+                {
+                    _logger.LogInfo($"product with id: {productId} doesnt exist");
+                    return NotFound();
+                }
+                
+
+                var reviewEntity = _mapper.Map<Reviews>(review);
+
+                reviewEntity.ProductId = productId;
+
+
+
+                _repository.Reviews.CreateReview(reviewEntity);
+                await _repository.SaveAsync();
+
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpDelete("{productId}/reviews/{reviewId}")]
+        public async Task<IActionResult> DeleteReview(int productId,int reviewId)
+        {
+            try
+            {
+               
+                var product = await _repository.Products.GetProductAsync(productId, trackChanges: false);
+
+                if (product == null)
+                {
+                    _logger.LogInfo($"product with id: {productId} doesnt exist");
+                    return NotFound();
+                }
+
+                var reviewEntity = await _repository.Reviews.GetReview(productId, reviewId, trackChanges:false);
+
+
+                _repository.Reviews.DeleteReview(reviewEntity); 
+                await _repository.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
     }
 }
