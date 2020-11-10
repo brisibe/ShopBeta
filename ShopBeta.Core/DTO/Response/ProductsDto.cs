@@ -7,7 +7,7 @@ namespace ShopBeta.Core.DTO.Response
 {
     public class ProductsDto
     {
-        public int ProductId { get; set; }      
+        public int ProductsId { get; set; }      
         public string Name { get; set; }
 
         public string Brand { get; set; }
@@ -17,11 +17,11 @@ namespace ShopBeta.Core.DTO.Response
 
         public string Description { get; set; }
 
-        public string Price { get; set; }
+        public decimal Price { get; set; }
         public string OldPrice { get; set; }
 
 
-      
+
 
     }
 }

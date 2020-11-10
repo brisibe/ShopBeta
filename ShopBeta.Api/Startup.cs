@@ -15,6 +15,8 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NLog;
 using ShopBeta.Api.Extensions;
+using ShopBeta.Core.Interfaces;
+using ShopBeta.Infrastructure.auth;
 
 namespace ShopBeta.Api
 {
@@ -40,6 +42,11 @@ namespace ShopBeta.Api
 
             services.ConfigureSqlContext(Configuration);
             services.ConfigureRepositoryManager();
+            services.AddAuthentication();
+            services.ConfigureIdentity();
+            services.ConfigureJwt(Configuration);
+
+            services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 
             services.AddControllers();
            
@@ -61,6 +68,7 @@ namespace ShopBeta.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

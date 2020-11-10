@@ -19,8 +19,8 @@ namespace ShopBeta.Infrastructure.Configuration
                     Brand = "Apple",
                     Category = "Phones",
                      Description = "500Gb rom, 12mp rear camera, blah blah blah",
-                     Price = "800,000",
-                     OldPrice = "850,000",
+                     Price = "800000",
+                     OldPrice = "150000",
                    
                
                 },
@@ -32,8 +32,8 @@ namespace ShopBeta.Infrastructure.Configuration
                       Brand = "Samsung",
                       Category = "Phones",
                       Description = "500Gb rom, 12mp rear camera, blah blah blah",
-                      Price = "500,000",
-                      OldPrice = "650,000",
+                      Price = "500000",
+                      OldPrice = "650000",
 
                   },
                     new Products
@@ -43,8 +43,8 @@ namespace ShopBeta.Infrastructure.Configuration
                         Brand = "Sony",
                         Category = "Gaming",
                         Description = "500Gb hdd,  dual controller, lah blah blah",
-                        Price = "200,000",
-                        OldPrice = "250,000",
+                        Price = "200000",
+                        OldPrice = "250000",
 
                     },
                       new Products
@@ -54,8 +54,8 @@ namespace ShopBeta.Infrastructure.Configuration
                           Brand = "Acer",
                           Category = "Computer",
                           Description = "500Gb ROM, 8Gb RAM, Nvidia gtx 1020, core i7",
-                          Price = "400,000",
-                          OldPrice = "420,000",
+                          Price = "400000",
+                          OldPrice = "420000",
 
                       }
 

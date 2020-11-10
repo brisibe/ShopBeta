@@ -28,6 +28,13 @@ namespace ShopBeta.Infrastructure.Repository
 
 
 
+        public async Task<IEnumerable<Products>> GetAllProductsWithReviewsAsync(bool trackChanges) =>
+           await FindAll(trackChanges).Include(a => a.reviews)
+               .OrderBy(c => c.ProductsId)
+               .ToListAsync();
+
+
+
         public async Task<Products> GetProductAsync(int productId, bool trackChanges) => 
              await FindByCondition(c => c.ProductsId.Equals(productId), trackChanges).Include(a => a.reviews)
              .FirstOrDefaultAsync();

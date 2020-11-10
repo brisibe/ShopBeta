@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopBeta.Infrastructure.Repository;
 
 namespace ShopBeta.Api.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20201110201329_orders")]
+    partial class orders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,22 +50,22 @@ namespace ShopBeta.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9dc84326-d2b1-44e0-81ec-cb426c7aa027",
-                            ConcurrencyStamp = "f2dcb1f6-4c24-4b91-8a88-f602d4984fec",
+                            Id = "9cd6644c-747f-4432-b84b-ea10a71b2a8f",
+                            ConcurrencyStamp = "a024a3e8-7668-44cf-8fd0-9d13758a2572",
                             Name = "Seller",
                             NormalizedName = "SELLER"
                         },
                         new
                         {
-                            Id = "7a3e67ad-3316-437e-b1ed-a914c0a9f4e9",
-                            ConcurrencyStamp = "0f4d2531-fb61-4446-8cc1-c89fe9833b59",
+                            Id = "e1293093-e561-46b2-9577-cae241b426ae",
+                            ConcurrencyStamp = "03c672a9-9fac-489b-97f7-7717678eea2a",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "b36da8eb-b3a6-46e7-989e-86438e0d19c4",
-                            ConcurrencyStamp = "9fd357ef-3341-44bd-869d-6851c689b1e1",
+                            Id = "e041d9f1-9a75-446e-a352-516958d5f255",
+                            ConcurrencyStamp = "61052091-a0e0-4fba-9267-ea011fc08098",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -171,57 +173,6 @@ namespace ShopBeta.Api.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("ShopBeta.Core.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OrderNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("ShopBeta.Core.Models.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("ShopBeta.Core.Models.Products", b =>
@@ -341,7 +292,7 @@ namespace ShopBeta.Api.Migrations
                             Comment = "A wonderful product, swift delivery",
                             Name = "Bode Thomas",
                             ProductId = 1,
-                            date = new DateTime(2020, 11, 10, 20, 21, 0, 149, DateTimeKind.Utc).AddTicks(7803)
+                            date = new DateTime(2020, 11, 10, 20, 13, 28, 873, DateTimeKind.Utc).AddTicks(2085)
                         },
                         new
                         {
@@ -349,7 +300,7 @@ namespace ShopBeta.Api.Migrations
                             Comment = "Great product but expensive",
                             Name = "Tunde Brisibe",
                             ProductId = 1,
-                            date = new DateTime(2020, 11, 10, 20, 21, 0, 149, DateTimeKind.Utc).AddTicks(9165)
+                            date = new DateTime(2020, 11, 10, 20, 13, 28, 873, DateTimeKind.Utc).AddTicks(3343)
                         },
                         new
                         {
@@ -357,7 +308,7 @@ namespace ShopBeta.Api.Migrations
                             Comment = "wonderful laptop",
                             Name = "Jesse Brisibe",
                             ProductId = 4,
-                            date = new DateTime(2020, 11, 10, 20, 21, 0, 149, DateTimeKind.Utc).AddTicks(9190)
+                            date = new DateTime(2020, 11, 10, 20, 13, 28, 873, DateTimeKind.Utc).AddTicks(3370)
                         });
                 });
 
@@ -438,6 +389,57 @@ namespace ShopBeta.Api.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("ShopBeta.Infrastructure.Orders.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ShopBeta.Infrastructure.Orders.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("OrderItem");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -489,24 +491,6 @@ namespace ShopBeta.Api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ShopBeta.Core.Models.Order", b =>
-                {
-                    b.HasOne("ShopBeta.Core.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("ShopBeta.Core.Models.OrderItem", b =>
-                {
-                    b.HasOne("ShopBeta.Core.Models.Order", "Order")
-                        .WithMany("Items")
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("ShopBeta.Core.Models.Products", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductsId");
-                });
-
             modelBuilder.Entity("ShopBeta.Core.Models.Products", b =>
                 {
                     b.HasOne("ShopBeta.Core.Models.User", "Seller")
@@ -521,6 +505,24 @@ namespace ShopBeta.Api.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ShopBeta.Infrastructure.Orders.Order", b =>
+                {
+                    b.HasOne("ShopBeta.Core.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("ShopBeta.Infrastructure.Orders.OrderItem", b =>
+                {
+                    b.HasOne("ShopBeta.Infrastructure.Orders.Order", "Order")
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("ShopBeta.Core.Models.Products", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductsId");
                 });
 #pragma warning restore 612, 618
         }

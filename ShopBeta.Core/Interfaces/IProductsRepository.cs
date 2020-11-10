@@ -9,6 +9,7 @@ namespace ShopBeta.Core.Interfaces
    public interface IProductsRepository
     {
         Task<IEnumerable<Products>> GetAllProductsAsync(bool trackChanges);
+        Task<IEnumerable<Products>> GetAllProductsWithReviewsAsync(bool trackChanges);
         Task<Products> GetProductAsync(int productId, bool trackChanges);
         void CreateProduct(Products product);
         void DeleteProduct(Products product);

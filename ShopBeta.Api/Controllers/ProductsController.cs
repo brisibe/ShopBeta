@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -27,22 +28,36 @@ namespace ShopBeta.Api.Controllers
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-
         [HttpGet]
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetProducts(bool withReviews=false)
         {
 
             try
             {
-
-                var products = await _repository.Products.GetAllProductsAsync(trackChanges: false);
-                if (products == null)
+                if (withReviews == false)
                 {
-                    _logger.LogInfo("No products where found");
-                    return NoContent();
-                }
 
-                return Ok(products);
+                    var products = await _repository.Products.GetAllProductsAsync(trackChanges: false);
+                    if (products == null)
+                    {
+                        _logger.LogInfo("No products were found");
+                        return NoContent();
+                    }
+
+                    //var productDto = _mapper.Map<ProductsDto>(products);
+
+                    return Ok(products);
+                }
+                else
+                {
+                    var productsWithReviews = await _repository.Products.GetAllProductsWithReviewsAsync(trackChanges: false);
+                    if(productsWithReviews == null)
+                    {
+                        _logger.LogInfo("no products were found.");
+                        return NoContent();
+                    }
+                    return Ok(productsWithReviews);
+                }
             }
             catch (Exception ex)
             {
@@ -81,6 +96,7 @@ namespace ShopBeta.Api.Controllers
 
         }
 
+        [Authorize(Roles = "Admin,Seller")]
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] ProductCreationDto productDto)
         {
@@ -115,6 +131,7 @@ namespace ShopBeta.Api.Controllers
         }
 
         [HttpDelete("{productId}")]
+        [Authorize(Roles = "Admin,Seller")]
 
         public async Task<IActionResult> DeleteProduct(int productId)
         {
@@ -165,6 +182,7 @@ namespace ShopBeta.Api.Controllers
             }
         }
 
+        [Authorize(Roles ="Admin,Customer")]
         [HttpPost("{productId}/reviews")]
         public async Task<IActionResult> CreateReview (int productId, ReviewsDto review)
         {
@@ -203,6 +221,7 @@ namespace ShopBeta.Api.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin,Customer")]
         [HttpDelete("{productId}/reviews/{reviewId}")]
         public async Task<IActionResult> DeleteReview(int productId,int reviewId)
         {

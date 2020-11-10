@@ -24,17 +24,17 @@ namespace ShopBeta.Core.Models
         [MaxLength(50)]
         public string Category { get; set; }
 
+        public User Seller { get; set; }
+
         public string Description { get; set; }
 
         [Required(ErrorMessage = "product price is required.")]
         public string Price { get; set; }
+        
         public string OldPrice { get; set; }
 
-        public ICollection<Reviews> reviews { get; set; }
+        public ICollection<Reviews> reviews { get; set; } = new List<Reviews>();
 
-       
-
-
-
+   
     }
 }
