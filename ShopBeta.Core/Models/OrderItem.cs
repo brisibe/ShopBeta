@@ -10,10 +10,15 @@ namespace ShopBeta.Core.Models
    public  class OrderItem
     {
         public int Id { get; set; }
-        public Products Product { get; set; }
+        public int ProductId { get; set; }
+        public int OrderId { get; set; }
         public int Quantity { get; set; }
         
-        public int Price { get; set;  }
+        public string Price { get; set;  }
+        public string OldPrice { get; set; }
         public Order Order { get; set; }
+        public Products Product { get; set; }
+
+       
     }
 }

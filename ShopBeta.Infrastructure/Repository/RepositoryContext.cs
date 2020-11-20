@@ -21,13 +21,17 @@ namespace ShopBeta.Infrastructure.Repository
         {
             base.OnModelCreating(modelBuilder);
 
+
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
-            modelBuilder.ApplyConfiguration(new ReviewConfiguration());
+            modelBuilder.ApplyConfiguration(new ReviewConfiguration()); 
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            //modelBuilder.ApplyConfiguration(new OrderConfiguration());
         }
 
         public DbSet<Products> Products { get; set; }
         public DbSet<Reviews> Reviews { get; set; }
         public DbSet<Order> Orders { get; set; }
+
+
     }
 }

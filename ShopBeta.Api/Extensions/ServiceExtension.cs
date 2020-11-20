@@ -79,6 +79,8 @@ namespace ShopBeta.Api.Extensions
             })
                 .AddJwtBearer(options =>
                 {
+
+                    
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,

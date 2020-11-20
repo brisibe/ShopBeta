@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopBeta.Infrastructure.Repository;
 
 namespace ShopBeta.Api.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20201115015458_data")]
+    partial class data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,22 +50,22 @@ namespace ShopBeta.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "29e6cc74-582a-42f8-822e-d94b42a483dc",
-                            ConcurrencyStamp = "cee7fd59-52b7-4f2a-92a7-1b8a391d9f15",
+                            Id = "dfb10cce-f3a6-4618-8120-d3a5d2b71e46",
+                            ConcurrencyStamp = "888f2cf4-c777-4afa-83e4-a4c3b9b0d178",
                             Name = "Seller",
                             NormalizedName = "SELLER"
                         },
                         new
                         {
-                            Id = "c92534ec-1973-4a14-b65a-da1e631486d0",
-                            ConcurrencyStamp = "570eeccf-da24-4979-9e57-e430f6558046",
+                            Id = "7e76373f-50ab-4e54-813a-c6f928ec5d5d",
+                            ConcurrencyStamp = "b0399264-a5a6-4b0a-b60c-fd78ef550d98",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "925a19b4-ad6e-41a4-8bfb-7ec46f055f0f",
-                            ConcurrencyStamp = "2111baf3-1297-4da7-ad94-21513445c967",
+                            Id = "5b9b0c44-ffc0-49a5-83d5-60335f016035",
+                            ConcurrencyStamp = "a14e4fec-b195-4acb-ae9a-a5fa7a7c30f7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -183,17 +185,11 @@ namespace ShopBeta.Api.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ShippingAddress")
+                    b.Property<string>("OrderNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("phone")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -209,16 +205,13 @@ namespace ShopBeta.Api.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("OldPrice")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Price")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductsId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -228,7 +221,7 @@ namespace ShopBeta.Api.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductsId");
 
                     b.ToTable("OrderItem");
                 });
@@ -264,12 +257,6 @@ namespace ShopBeta.Api.Migrations
 
                     b.Property<string>("Price")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SellerId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Store")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -356,7 +343,7 @@ namespace ShopBeta.Api.Migrations
                             Comment = "A wonderful product, swift delivery",
                             Name = "Bode Thomas",
                             ProductId = 1,
-                            date = new DateTime(2020, 11, 19, 20, 51, 34, 12, DateTimeKind.Utc).AddTicks(6047)
+                            date = new DateTime(2020, 11, 15, 1, 54, 57, 621, DateTimeKind.Utc).AddTicks(73)
                         },
                         new
                         {
@@ -364,7 +351,7 @@ namespace ShopBeta.Api.Migrations
                             Comment = "Great product but expensive",
                             Name = "Tunde Brisibe",
                             ProductId = 1,
-                            date = new DateTime(2020, 11, 19, 20, 51, 34, 13, DateTimeKind.Utc).AddTicks(1959)
+                            date = new DateTime(2020, 11, 15, 1, 54, 57, 621, DateTimeKind.Utc).AddTicks(1374)
                         },
                         new
                         {
@@ -372,7 +359,7 @@ namespace ShopBeta.Api.Migrations
                             Comment = "wonderful laptop",
                             Name = "Jesse Brisibe",
                             ProductId = 4,
-                            date = new DateTime(2020, 11, 19, 20, 51, 34, 13, DateTimeKind.Utc).AddTicks(2039)
+                            date = new DateTime(2020, 11, 15, 1, 54, 57, 621, DateTimeKind.Utc).AddTicks(1402)
                         });
                 });
 
@@ -430,7 +417,7 @@ namespace ShopBeta.Api.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Store")
+                    b.Property<string>("ShopName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -515,15 +502,11 @@ namespace ShopBeta.Api.Migrations
                 {
                     b.HasOne("ShopBeta.Core.Models.Order", "Order")
                         .WithMany("Items")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("ShopBeta.Core.Models.Products", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductsId");
                 });
 
             modelBuilder.Entity("ShopBeta.Core.Models.Products", b =>

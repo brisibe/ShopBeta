@@ -9,6 +9,8 @@ namespace ShopBeta.Core.Interfaces
     {
         IProductsRepository Products { get; }
         IReviewsRepository Reviews { get; }
+
+        IOrderRepository Orders { get; }
         Task SaveAsync();
     }
 }

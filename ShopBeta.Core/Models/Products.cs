@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ShopBeta.Core.Models
 {
-    public class Products
+    public class Products   
     {
         [Column("ProductId")]
         public int ProductsId { get; set; }
@@ -24,7 +25,10 @@ namespace ShopBeta.Core.Models
         [MaxLength(50)]
         public string Category { get; set; }
 
-        public User Seller { get; set; }
+        public User User { get; set; }
+
+        public string SellerId { get; set; }
+        public string Store { get; set; }
 
         public string Description { get; set; }
 
@@ -34,6 +38,8 @@ namespace ShopBeta.Core.Models
         public string OldPrice { get; set; }
 
         public ICollection<Reviews> reviews { get; set; } = new List<Reviews>();
+
+      
 
    
     }

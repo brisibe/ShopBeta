@@ -16,7 +16,7 @@ namespace ShopBeta.Infrastructure.Repository
 
 
         public async Task<IEnumerable<OrderItem>> GetAllOrderItemsAsync(int orderId, bool trackChanges) =>
-            await FindByCondition(a => a.Id.Equals(orderId), trackChanges)
+            await FindByCondition(a => a.OrderId.Equals(orderId), trackChanges)
             .ToListAsync();
 
         public void CreateOrderItem(OrderItem orderItem) =>

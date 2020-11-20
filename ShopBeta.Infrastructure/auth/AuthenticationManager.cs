@@ -54,9 +54,16 @@ namespace ShopBeta.Infrastructure.auth
 
             private async Task<List<Claim>> GetClaims()
             {
-                var claims = new List<Claim> {
+            var claims = new List<Claim> {
 
-                new Claim(ClaimTypes.Name, _user.UserName)
+                new Claim(ClaimTypes.Name, _user.UserName),
+                new Claim("Email", _user.Email),
+                new Claim("sub", _user.Id),
+                new Claim("PhoneNumber", _user.PhoneNumber),
+                new Claim("Address", _user.Address),
+                new Claim("Store", _user.Store)
+                
+
             };
 
                 var roles = await _userManager.GetRolesAsync(_user);
@@ -84,6 +91,8 @@ namespace ShopBeta.Infrastructure.auth
 
                 return tokenOptions;
             }
+
+     
         }
     }
 

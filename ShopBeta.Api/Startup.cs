@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +20,7 @@ using Newtonsoft.Json;
 using NLog;
 using ShopBeta.Api.Extensions;
 using ShopBeta.Core.Interfaces;
+using ShopBeta.Core.Models;
 using ShopBeta.Infrastructure.auth;
 
 namespace ShopBeta.Api
@@ -44,11 +49,15 @@ namespace ShopBeta.Api
             services.ConfigureRepositoryManager();
             services.AddAuthentication();
             services.ConfigureIdentity();
+            
             services.ConfigureJwt(Configuration);
 
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 
+
             services.AddControllers();
+
+
            
             services.AddMvc(option => option.EnableEndpointRouting = false) //this enables us to load related entities in our response
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
@@ -68,6 +77,7 @@ namespace ShopBeta.Api
 
             app.UseRouting();
 
+            
             app.UseAuthentication();
             app.UseAuthorization();
 

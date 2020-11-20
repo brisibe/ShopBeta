@@ -12,7 +12,7 @@ namespace ShopBeta.Infrastructure.Authentication
         [Required(ErrorMessage = "Username is required")]
         public string UserName { get; set; }
 
-        public string StoreName { get; set; }
+        public string Store { get; set; }
 
         [Required(ErrorMessage = "Password is requird")]
         public string Password { get; set; }

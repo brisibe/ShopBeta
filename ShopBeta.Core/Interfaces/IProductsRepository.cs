@@ -1,4 +1,5 @@
-﻿using ShopBeta.Core.Models;
+﻿using ShopBeta.Core.DTO.Response;
+using ShopBeta.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

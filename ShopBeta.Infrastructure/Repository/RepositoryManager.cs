@@ -10,6 +10,7 @@ namespace ShopBeta.Infrastructure.Repository
     {
         private RepositoryContext _repositoryContext;
         private IProductsRepository _productsRepository;
+        private IOrderRepository _orderRepository;
         private IReviewsRepository _reviewsRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext)
@@ -35,6 +36,17 @@ namespace ShopBeta.Infrastructure.Repository
                 return _reviewsRepository;
             }
         }
+         
+        public IOrderRepository Orders
+        {
+            get
+            {
+                if (_orderRepository == null) _orderRepository = new OrderRepository(_repositoryContext);
+
+                return _orderRepository;
+            }
+        }
+
 
         public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
       

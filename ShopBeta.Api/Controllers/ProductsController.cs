@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ShopBeta.Core.DTO.Response;
@@ -21,12 +24,15 @@ namespace ShopBeta.Api.Controllers
         private readonly IMapper _mapper;
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
-        public ProductsController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
+        private readonly UserManager<User> _userManager;
+        public ProductsController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper, UserManager<User> userManager)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetProducts(bool withReviews=false)
@@ -46,16 +52,20 @@ namespace ShopBeta.Api.Controllers
 
                     //var productDto = _mapper.Map<ProductsDto>(products);
 
+
                     return Ok(products);
                 }
                 else
                 {
-                    var productsWithReviews = await _repository.Products.GetAllProductsWithReviewsAsync(trackChanges: false);
+                     var productsWithReviews = await _repository.Products.GetAllProductsWithReviewsAsync(trackChanges: false);
                     if(productsWithReviews == null)
                     {
                         _logger.LogInfo("no products were found.");
                         return NoContent();
                     }
+
+                    //var productsDto = _mapper.Map<ProductsDto>(productsWithReviews);
+
                     return Ok(productsWithReviews);
                 }
             }
@@ -73,14 +83,12 @@ namespace ShopBeta.Api.Controllers
             try
             {
                 var product = await _repository.Products.GetProductAsync(productId, trackChanges: false);
-                var reviews = await _repository.Reviews.GetReviews(productId, trackChanges: false);
 
                 if (product == null)
                 {
                     _logger.LogInfo($"Product with the id:{productId} doesnt exist");
                     return NotFound();
                 }
-
 
 
                 return Ok(product);
@@ -114,7 +122,21 @@ namespace ShopBeta.Api.Controllers
                     return UnprocessableEntity();
                 }
 
-                var product = _mapper.Map<Products>(productDto);   //TOdO: fix automapper problem
+                //gets the instance of the logged in user
+                ClaimsPrincipal user = this.User;
+               
+                string Store = user.Claims.Where(c => c.Type == "Store")
+                   .Select(x => x.Value).FirstOrDefault();
+
+                string seller = user.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
+                    .Select(x => x.Value).FirstOrDefault();
+
+
+
+                var product = _mapper.Map<Products>(productDto);
+
+                product.SellerId = seller;
+                product.Store = Store;
 
                 _repository.Products.CreateProduct(product);
                 await _repository.SaveAsync();
@@ -250,5 +272,7 @@ namespace ShopBeta.Api.Controllers
                 return StatusCode(500);
             }
         }
+
+        
     }
 }

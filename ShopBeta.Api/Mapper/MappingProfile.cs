@@ -7,6 +7,7 @@ using System.Text;
 using ShopBeta.Core.Entities.Requests;
 using ShopBeta.Core.DTO;
 using ShopBeta.Infrastructure.Authentication;
+using ShopBeta.Core.DTO.Requests;
 
 namespace ShopBeta.Infrastructure.Mapper
 {
@@ -23,7 +24,12 @@ namespace ShopBeta.Infrastructure.Mapper
             CreateMap<Products, ProductsDto>();
             CreateMap<Products, ProductsDto>().ReverseMap();
             CreateMap<UserRegistrationDto, User>();
-                
+            //enable all product dtos
+
+            CreateMap<Order, OrderCreationDto>().ReverseMap();
+            CreateMap<OrderItem, OrderItemCreationDto>().ReverseMap();
+            CreateMap<Order, OrderDto>().ReverseMap();
+            CreateMap<OrderItem, OrderItemDto>().ReverseMap();
            
 
 
