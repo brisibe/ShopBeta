@@ -1,3 +1,3 @@
 # ShopBeta
-mini e-commerce store backend running on asp.net core 3.0
+mini e-commerce store backend built with asp.net core 3.0
 
